@@ -1,0 +1,28 @@
+{
+  "name": "kurtbradd.com",
+  "version": "1.0.0",
+  "description": "website",
+  "main": "Gruntfile.js",
+  "private": true,
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-htmlmin": "^0.3.0",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-usemin": "^2.6.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://https://github.com/kurtbradd/kurtbradd.com.git"
+  },
+  "keywords": [
+    "website"
+  ],
+  "author": "Kurt DaCosta",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://https://github.com/kurtbradd/kurtbradd.com/issues"
+  },
+  "homepage": "https://https://github.com/kurtbradd/kurtbradd.com"
+}
