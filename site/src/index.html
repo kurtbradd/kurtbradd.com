@@ -44,32 +44,32 @@
 					<div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2">
 						<div class="row">
 							<div class="col-sm-2 col-xs-2">
-								<a href="mailto:kurtbradd@gmail.com?Subject=Let's%20connect!" target="_top">
+								<a href="mailto:kurtbradd@gmail.com?Subject=Let's%20connect!" rel="external" target="_top">
 									<i class="fa fa-envelope-square fa-3x social-icon" title="Email"></i>
 								</a>
 							</div>
 							<div class="col-sm-2 col-xs-2">
-								<a href="https://www.linkedin.com/in/kurtdacosta" target="_blank">
+								<a href="https://www.linkedin.com/in/kurtdacosta" rel="external" target="_blank">
 									<i class="fa fa-linkedin-square fa-3x social-icon" title="LinkedIn"></i>
 								</a>
 							</div>
 							<div class="col-sm-2 col-xs-2">
-								<a href="https://www.github.com/kurtbradd" target="_blank">
+								<a href="https://www.github.com/kurtbradd" rel="external" target="_blank">
 									<i class="fa fa-github-square fa-3x social-icon" title="Github"></i>
 								</a>
 							</div>
 							<div class="col-sm-2 col-xs-2">
-								<a href="https://www.twitter.com/kurtbradd" target="_blank">
+								<a href="https://www.twitter.com/kurtbradd" rel="external" target="_blank">
 									<i class="fa fa-twitter-square fa-3x social-icon" title="Twitter"></i>
 								</a>
 							</div>
 							<div class="col-sm-2 col-xs-2">
-								<a href="http://www.instagram.com/kurtbradd" target="_blank">
+								<a href="http://www.instagram.com/kurtbradd" rel="external" target="_blank">
 									<i class="fa fa-instagram fa-3x social-icon" title="Instagram"></i>
 								</a>
 							</div>
 							<div class="col-sm-2 col-xs-2">
-								<a href="https://www.facebook.com/Kurtbradd" target="_blank">
+								<a href="https://www.facebook.com/Kurtbradd" rel="external" target="_blank">
 									<i class="fa fa-facebook-square fa-3x social-icon" title="Facebook"></i>
 								</a>
 							</div>
@@ -78,7 +78,23 @@
 				</div>
 			</div>
 		</div>
-		<script>!function(){var t=function(t,e){e?window.open(t,e):window.location.href=t},e=function(t,e,n){t.addEventListener?t.addEventListener(e,n):t.attachEvent(“on”+e,function(){n.call(t)})};if(document.getElementsByTagName)for(var n=document.getElementsByTagName(“a”),i=document.domain.split(“.”).reverse()[1]+”.”+document.domain.split(“.”).reverse()[0],a=0;a<n.length;a++){var o=”string”==typeof n[a].getAttribute(“href”)?n[a].getAttribute(“href”):””,r=o.match(i);(o.match(/^https?\:/i)&&!r||o.match(/^mailto\:/i))&&e(n[a],”click”,function(e){var n=this.getAttribute(“href”),i=”string”==typeof this.getAttribute(“target”)?this.getAttribute(“target”):””;console.log(“add event”,n),ga(“send”,”event”,”outbound”,”click”,n,{hitCallback:t(n,i)},{nonInteraction:1}),e.preventDefault()})}}();
-		</script>
+	 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	 	<script>
+			function trackOutboundClick(e) {
+				var $link = $(e.currentTarget);
+				var url = $link.attr('href');
+				var target = $link.attr('target');
+				if ('ga' in window) {
+					ga('send', 'event', 'outbound', 'click', url, {'hitCallback': function() {
+						if (target !== '_blank') {
+							document.location = url;
+						}
+					}});
+				}
+			}
+			$(document).ready(function() {
+				$('[rel="external"]').on('click', trackOutboundClick);
+			});
+		</script> 
 	</body>
 </html>
