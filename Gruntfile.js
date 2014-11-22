@@ -1,13 +1,14 @@
 // Gruntfile.js
 module.exports = function(grunt) {
+	var server = require('./server.js');
 	grunt.initConfig({
 		cssmin: {
 			generated: {
 				expand: true,
 				cwd: 'site/src/assets/css/',
-		    src: ['*.css', '!*.min.css'],
-		    dest: 'site/dist/assets/css/',
-		    ext: '.min.css'
+				src: ['*.css', '!*.min.css'],
+				dest: 'site/dist/assets/css/',
+				ext: '.min.css'
 			}
 		},
 		htmlmin: {
@@ -38,16 +39,43 @@ module.exports = function(grunt) {
 			}
 		},
 		usemin: {
-	    html: ['site/dist/index.html']
+			html: ['site/dist/index.html']
+		},
+		connect: {
+			server: {
+				options: {
+					port: 9001,
+					base:'site/dist',
+					keepalive: true
+				}
+			}
+		},
+		rsync: {
+			options: {
+				args: ['-avz', '--verbose'],
+				exclude:["'.DS_Store'"],
+				recursive: true
+			},
+			production: {
+				options: {
+					src:'./site/dist/',
+					dest: server.kurtbradd.landingpage.destination,
+					host: server.kurtbradd.landingpage.host
+				}
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-contrib-htmlmin');
 	grunt.loadNpmTasks('grunt-contrib-copy');
+	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-usemin');
+	grunt.loadNpmTasks('grunt-rsync');
 
 	grunt.registerTask('cpfiles', ['copy:html', 'copy:images']);
 	grunt.registerTask('build',['cpfiles', 'useminPrepare', 'cssmin','usemin','htmlmin']);
+	grunt.registerTask('deploy', ['rsync:production']);
+	grunt.registerTask('server', ['connect:server']);
 	grunt.registerTask('default', ['build']);
 };
