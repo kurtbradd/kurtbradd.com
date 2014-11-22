@@ -42,10 +42,17 @@ module.exports = function(grunt) {
 			html: ['site/dist/index.html']
 		},
 		connect: {
-			server: {
+			dist: {
 				options: {
 					port: 9001,
 					base:'site/dist',
+					keepalive: true
+				}
+			},
+			src: {
+				options: {
+					port: 9001,
+					base:'site/src',
 					keepalive: true
 				}
 			}
@@ -76,6 +83,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('cpfiles', ['copy:html', 'copy:images']);
 	grunt.registerTask('build',['cpfiles', 'useminPrepare', 'cssmin','usemin','htmlmin']);
 	grunt.registerTask('deploy', ['rsync:production']);
-	grunt.registerTask('server', ['connect:server']);
+	grunt.registerTask('serve-dist', ['connect:dist']);
+	grunt.registerTask('serve-src', ['connect:src']);
 	grunt.registerTask('default', ['build']);
 };
